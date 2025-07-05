@@ -51,26 +51,25 @@ pip install -e .
 
 ## Usage
 
-### Tab Completion Setup (Optional)
+### Tab Completion
 
-Enable tab completion for better user experience:
+Tab completion is automatically enabled when you install the package:
 
 ```bash
-# Install tab completion (works on zsh, bash, fish)
-guitar install-completion
+# Install the package to enable tab completion
+uv pip install -e .
 
-# For specific shell (optional)
-guitar install-completion --shell zsh
-
-# Restart your shell or source your profile
-source ~/.zshrc  # or ~/.bashrc for bash users
+# Or using pip
+pip install -e .
 ```
 
 **Note**: Tab completion provides intelligent suggestions for:
-- Commands (`blues`, `scale`, `install-completion`)
+- Commands (`blues`, `scale`)
 - Scale names (all 13 supported scales)
 - Command options (`--minor`, `--degrees`, `--start`, `--end`)
 - Root notes (C, D, E, F, G, A, B with sharps/flats)
+
+Tab completion works in zsh, bash, fish, and PowerShell.
 
 ### Blues Chord Progressions
 
@@ -281,9 +280,11 @@ For detailed project requirements and specifications, see the [Requirements Docu
 Key requirements covered:
 - Core functionality specifications
 - CLI interface requirements
-- Performance and compatibility requirements
+- Performance and compatibility requirements (Python 3.12+)
 - Testing and quality requirements
 - Future extension plans
+
+For tab completion technical details, see the [Tab Completion Documentation](docs/tab-completion.md) (written in Japanese).
 
 ## Contributing
 

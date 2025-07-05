@@ -6,11 +6,11 @@
 
 ## 実装方式
 
-### Click 8.x系標準補完システム
+### Typer標準補完システム
 
-- **フレームワーク**: Click 8.2.1の標準補完機能を使用
-- **依存関係**: `click-completion` パッケージを使用せず、Clickの標準機能のみを使用
-- **対応シェル**: zsh, bash, fish
+- **フレームワーク**: Typer 0.12.0の標準補完機能を使用（内部でClickを使用）
+- **自動有効化**: パッケージとしてインストールすることで自動的に有効になる
+- **対応シェル**: zsh, bash, fish, PowerShell
 
 ### zsh用補完関数
 
@@ -90,25 +90,26 @@ $ guitar scale C major --<TAB>
 
 ## インストール方法
 
-### 自動インストール（推奨）
+### パッケージインストール（推奨）
 
 ```bash
-# シェル自動検出
-guitar install-completion
+# パッケージとしてインストール
+uv pip install -e .
 
-# 設定反映
-source ~/.zshrc
+# または
+pip install -e .
 ```
 
-### 手動インストール
+**注意**: パッケージとしてインストールすることで、タブ補完は自動的に有効になります。追加の設定は不要です。
+
+### 開発環境でのテスト
 
 ```bash
-# シェル指定
-guitar install-completion --shell zsh
-
-# 設定反映
-source ~/.zshrc
+# 開発環境でのテスト実行
+python -m guitarra.cli <TAB>
 ```
+
+開発環境では、パッケージがインストールされていないため、タブ補完は動作しません。
 
 ## 動作確認
 
@@ -130,26 +131,22 @@ guitar blues A --<TAB>
 #### 1. 補完が動作しない場合
 
 ```bash
-# 補完設定の確認
-grep "_guitar" ~/.zshrc
+# パッケージが正しくインストールされているか確認
+pip list | grep guitarra
 
-# 補完関数の再読み込み
-source ~/.zshrc
+# guitarコマンドが実行可能か確認
+which guitar
 
-# 補完システムの初期化
-autoload -U compinit
-compinit
+# パッケージを再インストール
+pip uninstall guitarra
+pip install -e .
 ```
 
-#### 2. 重複設定の削除
+#### 2. 開発環境での補完テスト
 
 ```bash
-# 古い設定を削除
-sed -i '' '/^#compdef guitar/,/^fi$/d' ~/.zshrc
-
-# 新しい設定を追加
-guitar install-completion
-source ~/.zshrc
+# typerコマンドを使って補完テスト
+typer guitarra/cli.py run --help
 ```
 
 ## 技術的な詳細
@@ -162,7 +159,7 @@ source ~/.zshrc
 
 ### 補完出力フォーマット
 
-Click 8.xの補完出力は以下の形式：
+Typer（Click）の補完出力は以下の形式：
 
 ```
 plain <候補> <説明>
@@ -180,13 +177,12 @@ file <ファイル名> <説明>
 
 ## 制限事項
 
-- 現在はzsh用の実装のみ提供
-- bash, fish用の実装は将来的に追加予定
+- 開発環境（`python -m guitarra.cli`）では補完が動作しない
+- パッケージインストール後のみ有効
 - 動的補完（現在のコンテキストに基づく補完）は未実装
 
 ## 将来の拡張
 
-- bash用補完関数の実装
-- fish用補完関数の実装
 - 動的補完（キーに基づくスケール候補の絞り込み）
 - 補完候補の説明文の多言語対応
+- コンテキストを考慮した補完機能の強化

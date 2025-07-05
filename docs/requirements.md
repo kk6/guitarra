@@ -108,30 +108,19 @@ Guitarra（ギターラ）
 - **機能ID**: F007
 - **機能名**: コマンドライン タブ補完
 - **説明**: コマンド、サブコマンド、オプション、引数の入力時にタブキーによる補完機能を提供する
-- **対応シェル**: zsh, bash, fish
+- **対応シェル**: zsh, bash, fish, PowerShell
 - **補完対象**:
-  - メインコマンド: `guitar <TAB>` → `blues`, `scale`, `install-completion`
+  - メインコマンド: `guitar <TAB>` → `blues`, `scale`
   - スケール名: `guitar scale C <TAB>` → 利用可能な全スケール名を表示
   - オプション: `guitar blues A --<TAB>` → `--minor`, `--degrees`
   - 基本スケール: major, minor, pentatonic_major, pentatonic_minor
   - モード系: dorian, phrygian, lydian, mixolydian, aeolian, locrian
   - その他: blues, harmonic_minor, melodic_minor
-- **インストール方法**:
-  ```bash
-  # 自動検出（推奨）
-  guitar install-completion
-  
-  # 手動でシェル指定
-  guitar install-completion --shell zsh
-  
-  # 設定反映
-  source ~/.zshrc
-  ```
 - **技術仕様**:
-  - Click 8.x系の標準補完システムを使用
-  - zsh用補完関数は`COMP_WORDS`、`COMP_CWORD`環境変数を使用
-  - `_describe`と`compadd`による高機能な補完表示
+  - Typer 0.12.0の標準補完システムを使用（内部でClickを使用）
+  - パッケージインストール時に自動的に有効化
   - 説明付き補完候補の表示に対応
+- **有効化方法**: `pip install -e .` または `uv pip install -e .`でパッケージをインストール
 
 #### 2.2.4 エラーハンドリング機能
 - **機能ID**: F008
@@ -151,7 +140,7 @@ Guitarra（ギターラ）
 - **メモリ使用量**: 実行時メモリ使用量は50MB以下
 
 ### 3.2 互換性要件
-- **Python バージョン**: Python 3.8以上
+- **Python バージョン**: Python 3.12以上
 - **OS**: macOS, Linux, Windows（クロスプラットフォーム対応）
 
 ### 3.3 保守性要件
@@ -166,7 +155,7 @@ Guitarra（ギターラ）
 ## 4. 技術要件
 
 ### 4.1 開発環境
-- **言語**: Python 3.8+
+- **言語**: Python 3.12+
 - **パッケージマネージャー**: uv
 - **テストフレームワーク**: pytest
 - **リンター**: Ruff
@@ -174,7 +163,7 @@ Guitarra（ギターラ）
 
 ### 4.2 依存関係
 - **必須依存関係**:
-  - click >= 8.2.1（CLI フレームワーク、タブ補完機能を含む）
+  - typer >= 0.12.0（CLI フレームワーク、タブ補完機能を含む）
 - **開発依存関係**:
   - pytest >= 8.3.5（テストフレームワーク）
   - pytest-cov >= 6.2.1（テストカバレッジ）
@@ -249,7 +238,7 @@ Guitarra（ギターラ）
 
 ---
 
-**文書バージョン**: 1.2
+**文書バージョン**: 1.4
 **作成日**: 2025-07-05
 **最終更新日**: 2025-07-05
 **作成者**: Claude Code
@@ -262,3 +251,5 @@ Guitarra（ギターラ）
 | 1.0 | 2025-07-05 | 初版作成 |
 | 1.1 | 2025-07-05 | スケール表示機能の追加 |
 | 1.2 | 2025-07-05 | タブ補完機能の実装詳細更新、click-completion依存関係の削除 |
+| 1.3 | 2025-07-05 | Typer依存関係への更新、Python 3.12要件への変更 |
+| 1.4 | 2025-07-05 | タブ補完機能の実装方法を更新、install-completionコマンドが不要であることを明記 |
