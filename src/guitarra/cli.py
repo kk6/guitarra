@@ -5,7 +5,7 @@ from typing import Annotated
 import typer
 
 from guitarra.blues import TwelveBarBlues
-from guitarra.scales import Scale, GuitarFretboard
+from guitarra.scales import GuitarFretboard, Scale
 
 
 def complete_scale_name(incomplete: str):
@@ -21,7 +21,6 @@ def complete_root_note(incomplete: str):
 
 
 app = typer.Typer(help="Guitar practice CLI tool")
-
 
 
 @app.command()
@@ -74,9 +73,7 @@ def scale(
         fretboard = GuitarFretboard()
 
         # Display scale
-        scale_display = fretboard.display_scale(
-            guitar_scale, start_fret=start, end_fret=end, show_degrees=degrees
-        )
+        scale_display = fretboard.display_scale(guitar_scale, start_fret=start, end_fret=end, show_degrees=degrees)
         typer.echo(scale_display)
 
     except ValueError as e:
@@ -85,9 +82,7 @@ def scale(
             typer.echo("Valid notes: C, C#, D, D#, E, F, F#, G, G#, A, A#, B", err=True)
             typer.echo("You can also use flat notation: Db, Eb, Gb, Ab, Bb", err=True)
         elif "Unknown scale" in str(e):
-            typer.echo(
-                f"Available scales: {', '.join(Scale.get_available_scales())}", err=True
-            )
+            typer.echo(f"Available scales: {', '.join(Scale.get_available_scales())}", err=True)
 
 
 def main():

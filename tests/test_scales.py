@@ -1,7 +1,8 @@
 """Tests for guitar scale functionality."""
 
 import pytest
-from guitarra.scales import Scale, GuitarFretboard
+
+from guitarra.scales import GuitarFretboard, Scale
 
 
 class TestScale:

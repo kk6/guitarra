@@ -1,5 +1,7 @@
 """Guitar scale definitions and fretboard display functionality."""
 
+import typer
+
 
 class Scale:
     """Base class for musical scales."""
@@ -55,9 +57,7 @@ class Scale:
     def get_scale_notes(self) -> list[str]:
         """Get all notes in the scale."""
         pattern = self.SCALE_PATTERNS[self.scale_name]
-        return [
-            self.CHROMATIC[(self.root_index + interval) % 12] for interval in pattern
-        ]
+        return [self.CHROMATIC[(self.root_index + interval) % 12] for interval in pattern]
 
     def get_scale_degrees(self) -> list[int]:
         """Get scale degrees (1-based)."""
@@ -115,9 +115,7 @@ class GuitarFretboard:
 
         # Add header
         scale_name_formatted = scale.scale_name.replace("_", " ").title()
-        lines.append(
-            f"{scale.root} {scale_name_formatted} Scale (Frets {start_fret}-{end_fret}):"
-        )
+        lines.append(f"{scale.root} {scale_name_formatted} Scale (Frets {start_fret}-{end_fret}):")
         lines.append("")
 
         # Build fretboard representation
@@ -135,11 +133,19 @@ class GuitarFretboard:
                     else:
                         display_char = note
 
-                    # Format to ensure consistent width
-                    if len(display_char) == 1:
-                        line += f"-{display_char}-"
+                    # Check if this is the root note and apply red color
+                    if note == scale.root:
+                        if len(display_char) == 1:
+                            colored_display = typer.style(f"-{display_char}-", fg=typer.colors.RED)
+                        else:
+                            colored_display = typer.style(f"{display_char}-", fg=typer.colors.RED)
+                        line += colored_display
                     else:
-                        line += f"{display_char}-"
+                        # Format to ensure consistent width
+                        if len(display_char) == 1:
+                            line += f"-{display_char}-"
+                        else:
+                            line += f"{display_char}-"
                 else:
                     line += "---"
 
