@@ -1,7 +1,5 @@
 """12 bar blues chord progression generator."""
 
-from typing import List
-
 
 class TwelveBarBlues:
     """Generate 12 bar blues chord progressions."""
@@ -42,7 +40,7 @@ class TwelveBarBlues:
         """Get note at specified interval from root."""
         return self.CHROMATIC[(self.root_index + interval) % 12]
 
-    def get_major_progression(self) -> List[str]:
+    def get_major_progression(self) -> list[str]:
         """Get major 12 bar blues progression."""
         chord_mapping = {
             "I": self.root,  # Root (0 semitones)
@@ -51,7 +49,7 @@ class TwelveBarBlues:
         }
         return [chord_mapping[roman] for roman in self.MAJOR_PATTERN]
 
-    def get_minor_progression(self) -> List[str]:
+    def get_minor_progression(self) -> list[str]:
         """Get minor 12 bar blues progression."""
         chord_mapping = {
             "i": self.root + "m",  # Root minor
@@ -61,7 +59,7 @@ class TwelveBarBlues:
         return [chord_mapping[roman] for roman in self.MINOR_PATTERN]
 
     def format_progression(
-        self, progression: List[str], show_degrees: bool = False
+        self, progression: list[str], show_degrees: bool = False
     ) -> str:
         """Format progression as a readable chart."""
         bars = []
