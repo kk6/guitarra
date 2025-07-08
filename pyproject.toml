@@ -19,7 +19,7 @@ authors = [
 guitar = "guitarra.cli:main"
 
 [tool.ruff]
-line-length = 119
+line-length = 88
 lint.select = ["E", "F", "I", "N", "W", "UP"]
 lint.ignore = []
 
@@ -36,4 +36,5 @@ python_functions = ["test_*"]
 dev = [
     "pytest>=8.3.5",
     "pytest-cov>=6.2.1",
+    "ruff>=0.8.0",
 ]

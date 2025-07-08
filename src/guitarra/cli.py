@@ -16,7 +16,25 @@ def complete_scale_name(incomplete: str):
 
 def complete_root_note(incomplete: str):
     """Autocomplete function for root notes."""
-    notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "Db", "Eb", "Gb", "Ab", "Bb"]
+    notes = [
+        "C",
+        "C#",
+        "D",
+        "D#",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "G#",
+        "A",
+        "A#",
+        "B",
+        "Db",
+        "Eb",
+        "Gb",
+        "Ab",
+        "Bb",
+    ]
     return [note for note in notes if note.upper().startswith(incomplete.upper())]
 
 
@@ -25,9 +43,18 @@ app = typer.Typer(help="Guitar practice CLI tool")
 
 @app.command()
 def blues(
-    root: Annotated[str, typer.Argument(help="Root note (e.g., A, C#, Bb)", autocompletion=complete_root_note)],
-    minor: Annotated[bool, typer.Option("--minor", "-m", help="Generate minor blues progression")] = False,
-    degrees: Annotated[bool, typer.Option("--degrees", "-d", help="Show Roman numeral degrees")] = False,
+    root: Annotated[
+        str,
+        typer.Argument(
+            help="Root note (e.g., A, C#, Bb)", autocompletion=complete_root_note
+        ),
+    ],
+    minor: Annotated[
+        bool, typer.Option("--minor", "-m", help="Generate minor blues progression")
+    ] = False,
+    degrees: Annotated[
+        bool, typer.Option("--degrees", "-d", help="Show Roman numeral degrees")
+    ] = False,
 ):
     """Generate 12 bar blues chord progression."""
     try:
@@ -52,11 +79,26 @@ def blues(
 
 @app.command()
 def scale(
-    root: Annotated[str, typer.Argument(help="Root note (e.g., A, C#, Bb)", autocompletion=complete_root_note)],
-    scale_name: Annotated[str, typer.Argument(help="Name of the scale", autocompletion=complete_scale_name)],
-    start: Annotated[int, typer.Option("--start", "-s", help="Start fret position")] = 0,
+    root: Annotated[
+        str,
+        typer.Argument(
+            help="Root note (e.g., A, C#, Bb)", autocompletion=complete_root_note
+        ),
+    ],
+    scale_name: Annotated[
+        str,
+        typer.Argument(help="Name of the scale", autocompletion=complete_scale_name),
+    ],
+    start: Annotated[
+        int, typer.Option("--start", "-s", help="Start fret position")
+    ] = 0,
     end: Annotated[int, typer.Option("--end", "-e", help="End fret position")] = 12,
-    degrees: Annotated[bool, typer.Option("--degrees", "-d", help="Show scale degrees instead of note names")] = False,
+    degrees: Annotated[
+        bool,
+        typer.Option(
+            "--degrees", "-d", help="Show scale degrees instead of note names"
+        ),
+    ] = False,
 ):
     """Display guitar scale on fretboard."""
     try:
@@ -73,7 +115,9 @@ def scale(
         fretboard = GuitarFretboard()
 
         # Display scale
-        scale_display = fretboard.display_scale(guitar_scale, start_fret=start, end_fret=end, show_degrees=degrees)
+        scale_display = fretboard.display_scale(
+            guitar_scale, start_fret=start, end_fret=end, show_degrees=degrees
+        )
         typer.echo(scale_display)
 
     except ValueError as e:
@@ -82,7 +126,9 @@ def scale(
             typer.echo("Valid notes: C, C#, D, D#, E, F, F#, G, G#, A, A#, B", err=True)
             typer.echo("You can also use flat notation: Db, Eb, Gb, Ab, Bb", err=True)
         elif "Unknown scale" in str(e):
-            typer.echo(f"Available scales: {', '.join(Scale.get_available_scales())}", err=True)
+            typer.echo(
+                f"Available scales: {', '.join(Scale.get_available_scales())}", err=True
+            )
 
 
 def main():

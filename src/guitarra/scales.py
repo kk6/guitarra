@@ -57,7 +57,9 @@ class Scale:
     def get_scale_notes(self) -> list[str]:
         """Get all notes in the scale."""
         pattern = self.SCALE_PATTERNS[self.scale_name]
-        return [self.CHROMATIC[(self.root_index + interval) % 12] for interval in pattern]
+        return [
+            self.CHROMATIC[(self.root_index + interval) % 12] for interval in pattern
+        ]
 
     def get_scale_degrees(self) -> list[int]:
         """Get scale degrees (1-based)."""
@@ -115,7 +117,10 @@ class GuitarFretboard:
 
         # Add header
         scale_name_formatted = scale.scale_name.replace("_", " ").title()
-        lines.append(f"{scale.root} {scale_name_formatted} Scale (Frets {start_fret}-{end_fret}):")
+        lines.append(
+            f"{scale.root} {scale_name_formatted} Scale "
+            f"(Frets {start_fret}-{end_fret}):"
+        )
         lines.append("")
 
         # Build fretboard representation
@@ -136,9 +141,13 @@ class GuitarFretboard:
                     # Check if this is the root note and apply red color
                     if note == scale.root:
                         if len(display_char) == 1:
-                            colored_display = typer.style(f"-{display_char}-", fg=typer.colors.RED)
+                            colored_display = typer.style(
+                                f"-{display_char}-", fg=typer.colors.RED
+                            )
                         else:
-                            colored_display = typer.style(f"{display_char}-", fg=typer.colors.RED)
+                            colored_display = typer.style(
+                                f"{display_char}-", fg=typer.colors.RED
+                            )
                         line += colored_display
                     else:
                         # Format to ensure consistent width

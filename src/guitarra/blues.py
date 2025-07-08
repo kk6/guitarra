@@ -58,21 +58,31 @@ class TwelveBarBlues:
         }
         return [chord_mapping[roman] for roman in self.MINOR_PATTERN]
 
-    def format_progression(self, progression: list[str], show_degrees: bool = False) -> str:
+    def format_progression(
+        self, progression: list[str], show_degrees: bool = False
+    ) -> str:
         """Format progression as a readable chart."""
         bars = []
 
         if show_degrees:
             # Get the roman numeral pattern for degrees
-            degrees = self.MINOR_PATTERN if any("m" in chord for chord in progression) else self.MAJOR_PATTERN
+            degrees = (
+                self.MINOR_PATTERN
+                if any("m" in chord for chord in progression)
+                else self.MAJOR_PATTERN
+            )
 
             for i in range(0, 12, 4):
                 # Format chord line
-                chord_line = " | ".join(f"{chord:>4}" for chord in progression[i : i + 4])
+                chord_line = " | ".join(
+                    f"{chord:>4}" for chord in progression[i : i + 4]
+                )
                 bars.append(f"| {chord_line} |")
 
                 # Format degree line
-                degree_line = " | ".join(f"{degree:>4}" for degree in degrees[i : i + 4])
+                degree_line = " | ".join(
+                    f"{degree:>4}" for degree in degrees[i : i + 4]
+                )
                 bars.append(f"| {degree_line} |")
 
                 # Add separator line except for the last group
