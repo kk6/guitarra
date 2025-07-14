@@ -7,6 +7,7 @@ A command-line tool for guitar practice, featuring 12 bar blues chord progressio
 - Generate 12 bar blues chord progressions in any key (major and minor)
 - Display guitar scales on ASCII fretboard diagrams
 - Support for 13 different scales (major, minor, pentatonic, blues, modes, etc.)
+- Built-in metronome with customizable BPM, time signatures, and subdivisions
 - Tab completion for commands and scale names
 - Customizable fret range display
 - Optional Roman numeral degree display for music theory learning
@@ -43,6 +44,19 @@ guitar scale C major
 
 # Display A blues scale from 5th to 10th fret
 guitar scale A blues --start=5 --end=10
+```
+
+### Metronome
+
+```bash
+# Start metronome at 120 BPM
+guitar metronome 120
+
+# Practice with 3/4 time signature at 90 BPM
+guitar metronome 90 --beats 3
+
+# Use 8th note subdivisions for practice
+guitar metronome 140 --subdivisions eighth
 ```
 
 ### Tab Completion
@@ -85,6 +99,13 @@ E|-E--F-----G-----A-----B--C-----D-----E-
   - `--start, -s` - Start fret position (default: 0)
   - `--end, -e` - End fret position (default: 12)
   - `--degrees, -d` - Show scale degrees instead of note names
+
+### Metronome
+- `guitar metronome <bpm>` - Start metronome with specified BPM
+  - `--beats, -b` - Beats per measure (default: 4, range: 1-16)
+  - `--duration, -d` - Duration in seconds (0 for infinite, default: 0)
+  - `--subdivisions, -s` - Subdivision type: quarter, eighth, sixteenth, triplets
+  - `--style, -st` - Metronome style: simple, practice, performance
 
 ### Available Scales
 - **Basic**: major, minor, pentatonic_major, pentatonic_minor, blues

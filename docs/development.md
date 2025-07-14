@@ -99,6 +99,12 @@ uv run pytest
 
 # カバレッジ付きでテストを実行
 uv run pytest --cov=src
+
+# 特定のモジュールのテストを実行
+uv run pytest tests/test_metronome.py
+
+# 詳細モードでテスト実行
+uv run pytest -v
 ```
 
 ### Pre-commit フック
@@ -185,9 +191,45 @@ uv sync --refresh
 uv cache clean
 ```
 
+## プロジェクト構成
+
+### 依存関係
+
+#### メイン依存関係
+- **typer**: CLIフレームワーク
+- **metronome-rs**: Rust製のメトロノームライブラリ（高精度の音声生成）
+
+#### 開発依存関係
+- **pytest**: テストフレームワーク
+- **pytest-cov**: カバレッジ計測
+- **ruff**: Linter & Formatter
+- **ty**: 型チェッカー
+
+### メトロノーム機能について
+
+メトロノーム機能は`metronome-rs`ライブラリを使用して実装されています。
+
+#### 特徴
+- Rust製の高性能・低レイテンシメトロノーム
+- 複数の音色（Sine、Triangle、Square、Sawtooth）をサポート
+- 細分化対応（4分音符、8分音符、16分音符、3連符）
+- アクセント設定（Simple、Practice、Performance）
+
+#### テスト
+メトロノーム機能のテストは`tests/test_metronome.py`に含まれています：
+
+```bash
+# メトロノーム機能のテストのみ実行
+uv run pytest tests/test_metronome.py -v
+
+# モックを使用してテスト（実際の音は鳴らない）
+uv run pytest tests/test_metronome.py::TestMetronomeCommand::test_metronome_basic_usage
+```
+
 ## 関連リンク
 
 - [Ruff公式ドキュメント](https://docs.astral.sh/ruff/)
 - [ty公式リポジトリ](https://github.com/astral-sh/ty)
 - [pytest公式ドキュメント](https://docs.pytest.org/)
 - [uv公式ドキュメント](https://docs.astral.sh/uv/)
+- [metronome-rs PyPI](https://pypi.org/project/metronome-rs/)

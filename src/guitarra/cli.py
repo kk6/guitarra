@@ -2,6 +2,7 @@
 
 from typing import Annotated
 
+import metronome_rs
 import typer
 
 from guitarra.blues import TwelveBarBlues
@@ -129,6 +130,105 @@ def scale(
             typer.echo(
                 f"Available scales: {', '.join(Scale.get_available_scales())}", err=True
             )
+
+
+@app.command()
+def metronome(
+    bpm: Annotated[int, typer.Argument(help="Beats per minute (BPM)")],
+    beats: Annotated[int, typer.Option("--beats", "-b", help="Beats per measure")] = 4,
+    duration: Annotated[
+        int,
+        typer.Option("--duration", "-d", help="Duration in seconds (0 for infinite)"),
+    ] = 0,
+    subdivisions: Annotated[
+        str,
+        typer.Option(
+            "--subdivisions",
+            "-s",
+            help="Subdivision type: quarter, eighth, sixteenth, triplets",
+        ),
+    ] = "quarter",
+    style: Annotated[
+        str,
+        typer.Option(
+            "--style", "-st", help="Metronome style: simple, practice, performance"
+        ),
+    ] = "practice",
+):
+    """Start a metronome with customizable settings."""
+    try:
+        # Validate BPM
+        if bpm < 30 or bpm > 300:
+            raise ValueError("BPM must be between 30 and 300")
+
+        # Validate beats per measure
+        if beats < 1 or beats > 16:
+            raise ValueError("Beats per measure must be between 1 and 16")
+
+        typer.echo(
+            f"Starting metronome: {bpm} BPM, {beats}/4 time, {subdivisions} notes"
+        )
+        typer.echo("Press Ctrl+C to stop")
+        typer.echo()
+
+        # Choose metronome function based on style and subdivisions
+        if duration > 0:
+            duration_ms = duration * 1000
+            if subdivisions == "quarter":
+                metronome_rs.py_play_metronome_for_duration(bpm, beats, duration_ms)
+            else:
+                accent_config = _get_accent_config(subdivisions, style)
+                metronome_rs.py_play_custom_metronome_for_duration(
+                    bpm, beats, accent_config, duration_ms
+                )
+        else:
+            if style == "simple":
+                metronome_rs.py_start_simple_metronome(bpm)
+            elif subdivisions == "eighth":
+                metronome_rs.py_start_metronome_with_eighth_notes(bpm, beats)
+            elif subdivisions == "sixteenth":
+                metronome_rs.py_start_metronome_with_sixteenth_notes(bpm, beats)
+            elif subdivisions == "triplets":
+                metronome_rs.py_start_metronome_with_triplets(bpm, beats)
+            elif style == "performance":
+                metronome_rs.py_start_performance_metronome(bpm, beats)
+            else:
+                metronome_rs.py_start_practice_metronome(bpm, beats)
+
+            # Keep running until Ctrl+C
+            try:
+                import time
+
+                while True:
+                    time.sleep(0.1)
+            except KeyboardInterrupt:
+                metronome_rs.py_stop_global_metronome()
+                typer.echo("\nMetronome stopped.")
+
+    except ValueError as e:
+        typer.echo(f"Error: {e}", err=True)
+    except KeyboardInterrupt:
+        metronome_rs.py_stop_global_metronome()
+        typer.echo("\nMetronome stopped.")
+
+
+def _get_accent_config(subdivisions: str, style: str):
+    """Get accent configuration based on subdivisions and style."""
+    if style == "performance":
+        base_config = metronome_rs.PyAccentConfig.strong()
+    elif style == "simple":
+        base_config = metronome_rs.PyAccentConfig.default()
+    else:
+        base_config = metronome_rs.PyAccentConfig.subtle()
+
+    if subdivisions == "eighth":
+        return metronome_rs.PyAccentConfig.with_eighth_notes()
+    elif subdivisions == "sixteenth":
+        return metronome_rs.PyAccentConfig.with_sixteenth_notes()
+    elif subdivisions == "triplets":
+        return metronome_rs.PyAccentConfig.with_triplets()
+    else:
+        return base_config
 
 
 def main():

@@ -70,6 +70,7 @@ name = "guitarra"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "metronome-rs" },
     { name = "typer" },
 ]
 
@@ -82,7 +83,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "typer", specifier = ">=0.12.0" }]
+requires-dist = [
+    { name = "metronome-rs", specifier = ">=1.1.1" },
+    { name = "typer", specifier = ">=0.12.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
@@ -120,6 +124,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
+]
+
+[[package]]
+name = "metronome-rs"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bc/bb/dfc7f40dc47f689e1ab519b6306376e2e4c031ed1a6752028115736a143c/metronome_rs-1.1.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:32bf55d265b8758f3ff6baa57cdd7fda0a6ccd0563f772e4a62abedd226dedec", size = 319338, upload-time = "2025-07-04T10:38:08.356Z" },
+    { url = "https://files.pythonhosted.org/packages/29/d7/b10352943963ab417f673da300a908f67b236e36a960ef86bbd7babd3d36/metronome_rs-1.1.1-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:cad266fbb391228d45bf3af91e81c7f88539f52ebb6de20a2a37907c9e834231", size = 815186, upload-time = "2025-07-04T10:38:09.586Z" },
+    { url = "https://files.pythonhosted.org/packages/ae/5a/9ec77baa5a209da40fc0671a7a6e17940700e8a1f111bd7b68080635499f/metronome_rs-1.1.1-cp312-cp312-win_amd64.whl", hash = "sha256:7b162b1a6214dc3a4c5f8eaf5d00ca4dee7ce1dc064bb04b8e861e22ea494e03", size = 229977, upload-time = "2025-07-04T10:38:11.135Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/c1/bce86bdf6e6eef5b43d35b0266555215193017d49b262b3973333b9b3e37/metronome_rs-1.1.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:5eb619a91819ddcb6bad5b243c6ff518646fef1d0d91a07d8a0b0feac35dca49", size = 319242, upload-time = "2025-07-04T10:38:13.648Z" },
+    { url = "https://files.pythonhosted.org/packages/9c/be/078fd29478f3c7d6f3dd02b360b1c35f2d4da33a3639a814344abbb45978/metronome_rs-1.1.1-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:aa0b17f8f296a67fed5b88dee42631d929ebb16a8fe6e608d711b53b90cc550b", size = 815571, upload-time = "2025-07-04T10:38:15.304Z" },
+    { url = "https://files.pythonhosted.org/packages/8f/90/e52fe6e8e94d2c1fc4679c0027cadf04573424e9db656fae38608a5fe65e/metronome_rs-1.1.1-cp313-cp313-win_amd64.whl", hash = "sha256:1b0d459ba92677ad20968ad6341834b3344c578891f1935a91ea5a62f7590f7f", size = 229898, upload-time = "2025-07-04T10:38:16.501Z" },
 ]
 
 [[package]]

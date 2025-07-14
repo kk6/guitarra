@@ -135,6 +135,61 @@ guitar scale E blues --start 5 --end 12 --degrees
 guitar scale D dorian -s 0 -e 7
 ```
 
+#### 3. metronome - メトロノーム機能
+
+練習用のメトロノームを起動します。
+
+```bash
+guitar metronome [BPM]
+```
+
+**例：**
+```bash
+# 120 BPMでメトロノーム開始
+guitar metronome 120
+
+# 90 BPMで3/4拍子
+guitar metronome 90 --beats 3
+
+# 140 BPMで8分音符の細分化
+guitar metronome 140 --subdivisions eighth
+```
+
+**オプション：**
+- `--beats` / `-b`: 小節あたりの拍数 (デフォルト: 4、範囲: 1-16)
+- `--duration` / `-d`: 再生時間（秒）（0で無限、デフォルト: 0）
+- `--subdivisions` / `-s`: 細分化タイプ（quarter, eighth, sixteenth, triplets）
+- `--style` / `-st`: メトロノームスタイル（simple, practice, performance）
+
+**細分化タイプ：**
+- `quarter`: 4分音符（基本）
+- `eighth`: 8分音符の細分化
+- `sixteenth`: 16分音符の細分化
+- `triplets`: 3連符の細分化
+
+**スタイル：**
+- `simple`: シンプルなメトロノーム（アクセントなし）
+- `practice`: 練習用（控えめなアクセント）
+- `performance`: 演奏用（強いアクセント）
+
+**例：**
+```bash
+# 100 BPMで30秒間
+guitar metronome 100 --duration 30
+
+# 80 BPMで3/4拍子、8分音符細分化
+guitar metronome 80 --beats 3 --subdivisions eighth
+
+# 160 BPMでパフォーマンススタイル
+guitar metronome 160 --style performance
+
+# 120 BPMで16分音符、練習用スタイル
+guitar metronome 120 -s sixteenth -st practice
+```
+
+**停止方法：**
+メトロノームを停止するには `Ctrl+C` を押してください。
+
 ### エラーハンドリング
 
 無効な入力があった場合、エラーメッセージと共に有効な選択肢が表示されます：
@@ -163,4 +218,5 @@ guitar --help
 # 特定のコマンドのヘルプ
 guitar blues --help
 guitar scale --help
+guitar metronome --help
 ```
